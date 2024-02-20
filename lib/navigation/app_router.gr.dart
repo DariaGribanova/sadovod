@@ -15,6 +15,17 @@ abstract class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
+    AuthRouteWidget.name: (routeData) {
+      final args = routeData.argsAs<AuthRouteWidgetArgs>(
+          orElse: () => const AuthRouteWidgetArgs());
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: AuthPageWidget(
+          key: args.key,
+          wmFactory: args.wmFactory,
+        ),
+      );
+    },
     HomeRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -38,6 +49,17 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const ProfileTabPage(),
       );
     },
+    RegistrationRouteWidget.name: (routeData) {
+      final args = routeData.argsAs<RegistrationRouteWidgetArgs>(
+          orElse: () => const RegistrationRouteWidgetArgs());
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: RegistrationPageWidget(
+          key: args.key,
+          wmFactory: args.wmFactory,
+        ),
+      );
+    },
     WorksRouteWidget.name: (routeData) {
       final args = routeData.argsAs<WorksRouteWidgetArgs>(
           orElse: () => const WorksRouteWidgetArgs());
@@ -56,6 +78,47 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
   };
+}
+
+/// generated route for
+/// [AuthPageWidget]
+class AuthRouteWidget extends PageRouteInfo<AuthRouteWidgetArgs> {
+  AuthRouteWidget({
+    Key? key,
+    WidgetModel<ElementaryWidget<IWidgetModel>, ElementaryModel> Function(
+            BuildContext)
+        wmFactory = defaultAuthPageWidgetModelFactory,
+    List<PageRouteInfo>? children,
+  }) : super(
+          AuthRouteWidget.name,
+          args: AuthRouteWidgetArgs(
+            key: key,
+            wmFactory: wmFactory,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'AuthRouteWidget';
+
+  static const PageInfo<AuthRouteWidgetArgs> page =
+      PageInfo<AuthRouteWidgetArgs>(name);
+}
+
+class AuthRouteWidgetArgs {
+  const AuthRouteWidgetArgs({
+    this.key,
+    this.wmFactory = defaultAuthPageWidgetModelFactory,
+  });
+
+  final Key? key;
+
+  final WidgetModel<ElementaryWidget<IWidgetModel>, ElementaryModel> Function(
+      BuildContext) wmFactory;
+
+  @override
+  String toString() {
+    return 'AuthRouteWidgetArgs{key: $key, wmFactory: $wmFactory}';
+  }
 }
 
 /// generated route for
@@ -125,6 +188,48 @@ class ProfileTab extends PageRouteInfo<void> {
   static const String name = 'ProfileTab';
 
   static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [RegistrationPageWidget]
+class RegistrationRouteWidget
+    extends PageRouteInfo<RegistrationRouteWidgetArgs> {
+  RegistrationRouteWidget({
+    Key? key,
+    WidgetModel<ElementaryWidget<IWidgetModel>, ElementaryModel> Function(
+            BuildContext)
+        wmFactory = defaultRegistrationPageWidgetModelFactory,
+    List<PageRouteInfo>? children,
+  }) : super(
+          RegistrationRouteWidget.name,
+          args: RegistrationRouteWidgetArgs(
+            key: key,
+            wmFactory: wmFactory,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'RegistrationRouteWidget';
+
+  static const PageInfo<RegistrationRouteWidgetArgs> page =
+      PageInfo<RegistrationRouteWidgetArgs>(name);
+}
+
+class RegistrationRouteWidgetArgs {
+  const RegistrationRouteWidgetArgs({
+    this.key,
+    this.wmFactory = defaultRegistrationPageWidgetModelFactory,
+  });
+
+  final Key? key;
+
+  final WidgetModel<ElementaryWidget<IWidgetModel>, ElementaryModel> Function(
+      BuildContext) wmFactory;
+
+  @override
+  String toString() {
+    return 'RegistrationRouteWidgetArgs{key: $key, wmFactory: $wmFactory}';
+  }
 }
 
 /// generated route for
