@@ -9,10 +9,12 @@ abstract class IWorksPageWidgetModel extends IWidgetModel {
 
   ThemeData get theme;
 
+  bool get isLoggedIn;
+
 }
 
 WorksPageWidgetModel defaultWorksPageWidgetModelFactory(BuildContext context) {
-  return WorksPageWidgetModel(WorksPageModel(context.read()));
+  return WorksPageWidgetModel(WorksPageModel(context.read(), context.read()));
 }
 
 class WorksPageWidgetModel extends WidgetModel<WorksPageWidget, WorksPageModel>
@@ -22,6 +24,11 @@ class WorksPageWidgetModel extends WidgetModel<WorksPageWidget, WorksPageModel>
   @override
   void initWidgetModel() {
     super.initWidgetModel();
+  }
+
+  @override
+  bool get isLoggedIn {
+    return model.isLoggedIn();
   }
 
 

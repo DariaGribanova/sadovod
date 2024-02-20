@@ -19,7 +19,6 @@ class SadovodApp extends StatelessWidget {
           seedColor: Colors.black,
           primary: Colors.green,
           secondary: Colors.white,
-          surface: const Color(0x00f0f0f0),
         ),
         textTheme: TextTheme(
           bodyLarge: GoogleFonts.montserrat(
@@ -33,6 +32,50 @@ class SadovodApp extends StatelessWidget {
           bodySmall: GoogleFonts.montserrat(
             fontSize: 12,
             fontWeight: FontWeight.w400,
+          ),
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.green,
+            disabledBackgroundColor: Colors.green.withOpacity(0.5),
+            disabledForegroundColor: Colors.white,
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(8)),
+            ),
+            textStyle: GoogleFonts.montserrat(
+              fontSize: 16,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ),
+        outlinedButtonTheme: OutlinedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.white,
+            disabledBackgroundColor: Colors.white.withOpacity(0.5),
+            disabledForegroundColor: Colors.green,
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(8)),
+            ),
+            textStyle: GoogleFonts.montserrat(
+              fontSize: 16,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ),
+        inputDecorationTheme: InputDecorationTheme(
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide.none,
+            borderRadius: BorderRadius.circular(8),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide.none,
+            borderRadius: BorderRadius.circular(8),
+          ),
+          filled: true,
+          fillColor: Colors.white.withOpacity(0.6),
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 18,
+            vertical: 17,
           ),
         ),
       ),

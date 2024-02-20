@@ -19,23 +19,41 @@ class WorksPageWidget extends ElementaryWidget<IWorksPageWidgetModel> {
         appBar: AppBar(
           title: const Text("Работы"),
           centerTitle: true,
-          bottom: const TabBar(
-            tabs: [
-              Tab(icon: Icon(Icons.trending_up_rounded), child: Text('Рекомендации')),
-              Tab(icon: Icon(Icons.remove_done_rounded), child: Text('Невыполненные')),
-              Tab(icon: Icon(Icons.done_all_rounded), child: Text('Выполненные')),
-            ],
-          ),
+          bottom: (wm.isLoggedIn)
+              ? const TabBar(
+                  tabs: [
+                    Tab(
+                        icon: Icon(Icons.trending_up_rounded),
+                        child: Text('Рекомендации')),
+                    Tab(
+                        icon: Icon(Icons.remove_done_rounded),
+                        child: Text('Невыполненные')),
+                    Tab(
+                        icon: Icon(Icons.done_all_rounded),
+                        child: Text('Выполненные')),
+                  ],
+                )
+              : null,
         ),
-        body: const TabBarView(
-          children: [
-            Icon(Icons.trending_up_rounded),
-            Icon(Icons.remove_done_rounded),
-            Icon(Icons.done_all_rounded),
-          ],
-        ),
+        body: (!wm.isLoggedIn)
+            ? Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(32.0),
+                  child: Text(
+                    'Авторизуйтесь, чтобы получить список работ.',
+                    style: theme.textTheme.titleLarge,
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              )
+            : const TabBarView(
+                children: [
+                  Icon(Icons.trending_up_rounded),
+                  Icon(Icons.remove_done_rounded),
+                  Icon(Icons.done_all_rounded),
+                ],
+              ),
       ),
     );
   }
 }
-
