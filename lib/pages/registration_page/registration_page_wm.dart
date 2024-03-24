@@ -1,7 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:elementary/elementary.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sadovod/data/app_components.dart';
 import 'package:sadovod/navigation/app_router.dart';
 import 'package:sadovod/pages/registration_page/registration_page_model.dart';
 import 'registration_page_widget.dart';
@@ -13,19 +15,25 @@ abstract class IRegistrationPageWidgetModel extends IWidgetModel {
 
   void navigateAuth();
 
+  void auth();
+
   TextEditingController get usernameController;
 
-  TextEditingController get password;
+  TextEditingController get passwordController;
 
-  TextEditingController get name;
+  TextEditingController get nameController;
 
-  TextEditingController get lastName;
+  TextEditingController get lastNameController;
+
+  void toggleObscure();
+
+  ValueListenable<bool> get isObscured;
 }
 
 RegistrationPageWidgetModel defaultRegistrationPageWidgetModelFactory(
     BuildContext context) {
   return RegistrationPageWidgetModel(
-      RegistrationPageModel(context.read(), context.read()));
+      RegistrationPageModel(context.read(), AppComponents().tokenRepository));
 }
 
 class RegistrationPageWidgetModel
@@ -34,9 +42,10 @@ class RegistrationPageWidgetModel
   RegistrationPageWidgetModel(RegistrationPageModel model) : super(model);
 
   final TextEditingController usernameController = TextEditingController();
-  final TextEditingController password = TextEditingController();
-  final TextEditingController name = TextEditingController();
-  final TextEditingController lastName = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController lastNameController = TextEditingController();
+  final _isObscuredNotifier = ValueNotifier<bool>(true);
 
   @override
   void initWidgetModel() {
@@ -46,9 +55,10 @@ class RegistrationPageWidgetModel
   @override
   void dispose() {
     usernameController.dispose();
-    password.dispose();
-    name.dispose();
-    lastName.dispose();
+    passwordController.dispose();
+    nameController.dispose();
+    lastNameController.dispose();
+    _isObscuredNotifier.dispose();
     super.dispose();
   }
 
@@ -57,11 +67,25 @@ class RegistrationPageWidgetModel
 
   @override
   void navigatePop() {
-    Navigator.of(context).pop();
+    context.router.popUntilRoot();
   }
 
   @override
   void navigateAuth() {
     context.router.navigate(AuthRouteWidget());
   }
+
+  @override
+  void auth() {
+  }
+
+  @override
+  void toggleObscure() {
+    _isObscuredNotifier.value = !_isObscuredNotifier.value;
+  }
+
+  @override
+  ValueListenable<bool> get isObscured => _isObscuredNotifier;
+
+  ValueListenable<bool> get isObscuredNotifier => _isObscuredNotifier;
 }

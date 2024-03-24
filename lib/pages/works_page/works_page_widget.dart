@@ -19,40 +19,69 @@ class WorksPageWidget extends ElementaryWidget<IWorksPageWidgetModel> {
         appBar: AppBar(
           title: const Text("Работы"),
           centerTitle: true,
-          bottom: (wm.isLoggedIn)
-              ? const TabBar(
-                  tabs: [
-                    Tab(
-                        icon: Icon(Icons.trending_up_rounded),
-                        child: Text('Рекомендации')),
-                    Tab(
-                        icon: Icon(Icons.remove_done_rounded),
-                        child: Text('Невыполненные')),
-                    Tab(
-                        icon: Icon(Icons.done_all_rounded),
-                        child: Text('Выполненные')),
-                  ],
-                )
-              : null,
+          // bottom: (wm.isLoggedIn)
+          //     ? const TabBar(
+          //         tabs: [
+          //           Tab(
+          //               icon: Icon(Icons.trending_up_rounded),
+          //               child: Text('Рекомендации')),
+          //           Tab(
+          //               icon: Icon(Icons.remove_done_rounded),
+          //               child: Text('Невыполненные')),
+          //           Tab(
+          //               icon: Icon(Icons.done_all_rounded),
+          //               child: Text('Выполненные')),
+          //         ],
+          //       )
+          //     : null,
         ),
-        body: (!wm.isLoggedIn)
-            ? Center(
+        body: StreamBuilder<bool>(
+          stream: wm.isLoggedIn,
+          initialData: null,
+          builder: (context, snapshot) {
+            if (snapshot.data == true) {
+              return Column(
+                children: [
+                  TabBar(
+                    indicatorColor: theme.colorScheme.primary,
+                    labelColor: theme.colorScheme.primary,
+                    tabs: const [
+                      Tab(
+                          icon: Icon(Icons.trending_up_rounded),
+                          child: Text('Рекомендации')),
+                      Tab(
+                          icon: Icon(Icons.remove_done_rounded),
+                          child: Text('Невыполненные')),
+                      Tab(
+                          icon: Icon(Icons.done_all_rounded),
+                          child: Text('Выполненные')),
+                    ],
+                  ),
+                  Expanded(
+                    child: TabBarView(
+                      children: const [
+                        Icon(Icons.trending_up_rounded),
+                        Icon(Icons.remove_done_rounded),
+                        Icon(Icons.done_all_rounded),
+                      ],
+                    ),
+                  ),
+                ],
+              );
+            } else {
+              return Center(
                 child: Padding(
                   padding: const EdgeInsets.all(32.0),
                   child: Text(
                     'Авторизуйтесь, чтобы получить список работ.',
-                    style: theme.textTheme.titleLarge,
+                    style: theme.textTheme.bodyLarge,
                     textAlign: TextAlign.center,
                   ),
                 ),
-              )
-            : const TabBarView(
-                children: [
-                  Icon(Icons.trending_up_rounded),
-                  Icon(Icons.remove_done_rounded),
-                  Icon(Icons.done_all_rounded),
-                ],
-              ),
+              );
+            }
+          },
+        ),
       ),
     );
   }

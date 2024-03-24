@@ -9,6 +9,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return AutoTabsScaffold(
       lazyLoad: false,
       routes: const [
@@ -36,7 +37,7 @@ class HomePage extends StatelessWidget {
             backgroundColor: Colors.white,
             currentIndex: tabsRouter.activeIndex,
             onTap: tabsRouter.setActiveIndex,
-            items: const [
+            items: [
               BottomNavigationBarItem(
                 icon: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -44,7 +45,7 @@ class HomePage extends StatelessWidget {
                     Icon(Icons.home),
                     Text(
                       'Профиль',
-                      style: TextStyle(fontSize: 12),
+                      style: theme.textTheme.bodySmall,
                     ),
                   ],
                 ),
@@ -56,7 +57,7 @@ class HomePage extends StatelessWidget {
                     Icon(Icons.local_florist),
                     Text(
                       'Работы',
-                      style: TextStyle(fontSize: 12),
+                      style: theme.textTheme.bodySmall,
                     ),
                   ],
                 ),

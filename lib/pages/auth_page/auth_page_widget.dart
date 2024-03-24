@@ -31,37 +31,57 @@ class AuthPageWidget extends ElementaryWidget<IAuthPageWidgetModel> {
           child: ListView(
             children: [
               Text(
-                "Введите уникальное имя пользователя",
+                "Уникальное имя пользователя",
                 style: theme.textTheme.bodyLarge
                     ?.copyWith(color: theme.colorScheme.secondary),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16.0),
                 child: TextField(
-                  style: theme.textTheme.titleLarge,
+                  style: theme.textTheme.bodyLarge,
                   controller: wm.usernameController,
+                  decoration: InputDecoration(hintText: 'Петрович58'),
                 ),
               ),
               Text(
-                "Введите пароль",
+                "Пароль",
                 style: theme.textTheme.bodyLarge
                     ?.copyWith(color: theme.colorScheme.secondary),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16.0),
-                child: TextField(
-                  style: theme.textTheme.titleLarge,
-                  controller: wm.password,
-                ),
+              ValueListenableBuilder<bool>(
+                valueListenable: wm.isObscured,
+                builder: (context, isObscured, child) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                    child: TextField(
+                      style: theme.textTheme.bodyLarge,
+                      controller: wm.passwordController,
+                      obscureText: isObscured,
+                      decoration: InputDecoration(
+                        hintText: 'Пароль',
+                        suffixIcon: IconButton(
+                          icon: Icon(isObscured
+                              ? Icons.visibility_off
+                              : Icons.visibility),
+                          onPressed: () {
+                            wm.toggleObscure();
+                          },
+                        ),
+                      ),
+                    ),
+                  );
+                },
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 20.0),
                 child: OutlinedButton(
-                  onPressed: () async {},
+                  onPressed: () async {
+                    wm.auth();
+                  },
                   child: const Center(
                       child: Padding(
                     padding: EdgeInsets.all(20.0),
-                    child: Text('Авторизоваться'),
+                    child: Text('АВТОРИЗОВАТЬСЯ'),
                   )),
                 ),
               ),
@@ -77,7 +97,7 @@ class AuthPageWidget extends ElementaryWidget<IAuthPageWidgetModel> {
                     onPressed: wm.navigateRegistration,
                     child: Text(
                       "Зарегистрироваться!",
-                      style: theme.textTheme.titleLarge
+                      style: theme.textTheme.bodyLarge
                           ?.copyWith(color: theme.colorScheme.secondary),
                     ),
                   ),

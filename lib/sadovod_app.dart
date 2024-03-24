@@ -20,17 +20,23 @@ class SadovodApp extends StatelessWidget {
           primary: Colors.green,
           secondary: Colors.white,
         ),
+        appBarTheme: AppBarTheme(
+          titleTextStyle: GoogleFonts.montserrat(
+            fontSize: 20,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
         textTheme: TextTheme(
           bodyLarge: GoogleFonts.montserrat(
-            fontSize: 16,
+            fontSize: 20,
             fontWeight: FontWeight.w500,
           ),
           bodyMedium: GoogleFonts.montserrat(
-            fontSize: 14,
+            fontSize: 16,
             fontWeight: FontWeight.w400,
           ),
           bodySmall: GoogleFonts.montserrat(
-            fontSize: 12,
+            fontSize: 14,
             fontWeight: FontWeight.w400,
           ),
         ),
@@ -43,8 +49,8 @@ class SadovodApp extends StatelessWidget {
               borderRadius: BorderRadius.all(Radius.circular(8)),
             ),
             textStyle: GoogleFonts.montserrat(
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
+              fontSize: 18,
+              fontWeight: FontWeight.w400,
             ),
           ),
         ),
@@ -72,10 +78,15 @@ class SadovodApp extends StatelessWidget {
             borderRadius: BorderRadius.circular(8),
           ),
           filled: true,
-          fillColor: Colors.white.withOpacity(0.6),
+          fillColor: Colors.white.withOpacity(0.8),
           contentPadding: const EdgeInsets.symmetric(
             horizontal: 18,
             vertical: 17,
+          ),
+          hintStyle: GoogleFonts.montserrat(
+            fontSize: 20,
+            fontWeight: FontWeight.w500,
+            color: Colors.black.withOpacity(0.5),
           ),
         ),
       ),

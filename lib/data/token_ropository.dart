@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class TokenRepository extends ChangeNotifier {
@@ -7,6 +8,8 @@ class TokenRepository extends ChangeNotifier {
   }) : _useCaching = useCaching;
 
   bool get auth => _refreshToken != null;
+
+  BehaviorSubject<bool> isLoggedIn = BehaviorSubject<bool>.seeded(false);
 
   String? get accessToken => _accessToken;
 
@@ -23,6 +26,9 @@ class TokenRepository extends ChangeNotifier {
       final storage = await SharedPreferences.getInstance();
       _accessToken = storage.getString('accessToken');
       _refreshToken = storage.getString('refreshToken');
+      if (_accessToken != null && _refreshToken != null){
+        isLoggedIn.add(true);
+      }
     }
     notifyListeners();
   }
@@ -34,6 +40,7 @@ class TokenRepository extends ChangeNotifier {
     final storage = await SharedPreferences.getInstance();
     await storage.remove('accessToken');
     await storage.remove('refreshToken');
+    isLoggedIn.add(false);
   }
 
   void saveTokens({
@@ -45,6 +52,9 @@ class TokenRepository extends ChangeNotifier {
     notifyListeners();
     if (_useCaching) {
       _persistTokens();
+    }
+    if (_accessToken != null && _refreshToken != null){
+      isLoggedIn.add(true);
     }
   }
 

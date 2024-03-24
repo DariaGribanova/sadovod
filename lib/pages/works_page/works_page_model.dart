@@ -1,4 +1,5 @@
 import 'package:elementary/elementary.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:sadovod/data/token_ropository.dart';
 
 
@@ -8,8 +9,8 @@ class WorksPageModel extends ElementaryModel {
 
   final TokenRepository tokenRepository;
 
-  bool isLoggedIn() {
-    return tokenRepository.auth;
+  BehaviorSubject<bool> isLoggedIn() {
+    return tokenRepository.isLoggedIn;
   }
 
 }

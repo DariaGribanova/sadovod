@@ -1,6 +1,10 @@
+import 'package:dio/dio.dart';
 import 'package:elementary/elementary.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:provider/provider.dart';
+import 'package:sadovod/data/app_components.dart';
 import 'package:sadovod/navigation/app_router.dart';
 import 'package:sadovod/pages/auth_page/auth_page_model.dart';
 import 'auth_page_widget.dart';
@@ -13,13 +17,20 @@ abstract class IAuthPageWidgetModel extends IWidgetModel {
 
   void navigateRegistration();
 
+  void toggleObscure();
+
+  void auth();
+
   TextEditingController get usernameController;
 
-  TextEditingController get password;
+  TextEditingController get passwordController;
+
+  ValueListenable<bool> get isObscured;
 }
 
 AuthPageWidgetModel defaultAuthPageWidgetModelFactory(BuildContext context) {
-  return AuthPageWidgetModel(AuthPageModel(context.read(), context.read()));
+  return AuthPageWidgetModel(AuthPageModel(context.read(),
+      AppComponents().tokenRepository, AppComponents().authService));
 }
 
 class AuthPageWidgetModel extends WidgetModel<AuthPageWidget, AuthPageModel>
@@ -27,12 +38,14 @@ class AuthPageWidgetModel extends WidgetModel<AuthPageWidget, AuthPageModel>
   AuthPageWidgetModel(AuthPageModel model) : super(model);
 
   final TextEditingController usernameController = TextEditingController();
-  final TextEditingController password = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final _isObscuredNotifier = ValueNotifier<bool>(true);
 
   @override
   void dispose() {
     usernameController.dispose();
-    password.dispose();
+    passwordController.dispose();
+    _isObscuredNotifier.dispose();
     super.dispose();
   }
 
@@ -46,11 +59,26 @@ class AuthPageWidgetModel extends WidgetModel<AuthPageWidget, AuthPageModel>
 
   @override
   void navigatePop() {
-    Navigator.of(context).pop();
+    context.router.popUntilRoot();
   }
 
   @override
   void navigateRegistration() {
     context.router.navigate(RegistrationRouteWidget());
   }
+
+  @override
+  void auth() {
+    model.auth().then((value) => context.router.popUntilRoot());
+  }
+
+  @override
+  void toggleObscure() {
+    _isObscuredNotifier.value = !_isObscuredNotifier.value;
+  }
+
+  @override
+  ValueListenable<bool> get isObscured => _isObscuredNotifier;
+
+  ValueListenable<bool> get isObscuredNotifier => _isObscuredNotifier;
 }

@@ -3,46 +3,40 @@ import 'package:elementary/elementary.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:sadovod/data/app_components.dart';
 import 'package:sadovod/navigation/app_router.dart';
 import 'package:sadovod/pages/profile_page/profile_page_model.dart';
 import 'profile_page_widget.dart';
 
 abstract class IProfilePageWidgetModel extends IWidgetModel {
-
   ThemeData get theme;
 
-  bool get isLoggedIn;
-
-  BehaviorSubject<bool> get loadController;
+  BehaviorSubject<bool> get isLoggedIn;
 
   void navigateToAuth();
 
+  void logout();
 }
 
-ProfilePageWidgetModel defaultProfilePageWidgetModelFactory(BuildContext context) {
-  return ProfilePageWidgetModel(ProfilePageModel(context.read(), context.read()));
+ProfilePageWidgetModel defaultProfilePageWidgetModelFactory(
+    BuildContext context) {
+  return ProfilePageWidgetModel(
+      ProfilePageModel(context.read(), AppComponents().tokenRepository));
 }
 
-class ProfilePageWidgetModel extends WidgetModel<ProfilePageWidget, ProfilePageModel>
+class ProfilePageWidgetModel
+    extends WidgetModel<ProfilePageWidget, ProfilePageModel>
     implements IProfilePageWidgetModel {
   ProfilePageWidgetModel(ProfilePageModel model) : super(model);
-
-  BehaviorSubject<bool> loadController = BehaviorSubject<bool>.seeded(false);
 
   @override
   void initWidgetModel() {
     super.initWidgetModel();
-    loadController.add(true);
   }
 
   @override
-  bool get isLoggedIn {
+  BehaviorSubject<bool> get isLoggedIn {
     return model.isLoggedIn();
-  }
-
-  @override
-  bool get load {
-    return loadController.value;
   }
 
   @override
@@ -53,4 +47,8 @@ class ProfilePageWidgetModel extends WidgetModel<ProfilePageWidget, ProfilePageM
     context.router.navigate(AuthRouteWidget());
   }
 
+  @override
+  Future<void> logout() {
+    return model.logout();
+  }
 }
