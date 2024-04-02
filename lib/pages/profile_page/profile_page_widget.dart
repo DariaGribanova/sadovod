@@ -19,10 +19,10 @@ class ProfilePageWidget extends ElementaryWidget<IProfilePageWidgetModel> {
         title: const Text("Профиль"),
         centerTitle: true,
         actions: [
-          StreamBuilder<bool>(
-            stream: wm.isLoggedIn,
-            builder: (context, snapshot) {
-              if (snapshot.data == true) {
+          ValueListenableBuilder<bool>(
+            valueListenable: wm.isLoggedIn,
+            builder: (context, isLoggedIn, _) {
+              if (isLoggedIn == true) {
                 return IconButton(
                     onPressed: wm.logout, icon: const Icon(Icons.logout));
               } else {
@@ -33,15 +33,10 @@ class ProfilePageWidget extends ElementaryWidget<IProfilePageWidgetModel> {
         ],
       ),
       body: SafeArea(
-        child: StreamBuilder<bool>(
-          stream: wm.isLoggedIn,
-          initialData: null,
-          builder: (context, snapshot) {
-            if (snapshot.data == null) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            } else if (snapshot.data == false) {
+        child: ValueListenableBuilder<bool>(
+          valueListenable: wm.isLoggedIn,
+          builder: (context, isLoggedIn, _) {
+            if (isLoggedIn == false) {
               return Center(
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
@@ -71,7 +66,10 @@ class ProfilePageWidget extends ElementaryWidget<IProfilePageWidgetModel> {
               );
             } else {
               return ListView(
-                children: [],
+                shrinkWrap: true,
+                children: [
+
+                ],
               );
             }
           },

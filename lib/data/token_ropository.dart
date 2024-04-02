@@ -9,7 +9,7 @@ class TokenRepository extends ChangeNotifier {
 
   bool get auth => _refreshToken != null;
 
-  BehaviorSubject<bool> isLoggedIn = BehaviorSubject<bool>.seeded(false);
+  ValueNotifier<bool> isLoggedIn = ValueNotifier<bool>(false);
 
   String? get accessToken => _accessToken;
 
@@ -27,7 +27,7 @@ class TokenRepository extends ChangeNotifier {
       _accessToken = storage.getString('accessToken');
       _refreshToken = storage.getString('refreshToken');
       if (_accessToken != null && _refreshToken != null){
-        isLoggedIn.add(true);
+        isLoggedIn.value = true;
       }
     }
     notifyListeners();
@@ -40,7 +40,7 @@ class TokenRepository extends ChangeNotifier {
     final storage = await SharedPreferences.getInstance();
     await storage.remove('accessToken');
     await storage.remove('refreshToken');
-    isLoggedIn.add(false);
+    isLoggedIn.value = false;
   }
 
   void saveTokens({
@@ -54,7 +54,7 @@ class TokenRepository extends ChangeNotifier {
       _persistTokens();
     }
     if (_accessToken != null && _refreshToken != null){
-      isLoggedIn.add(true);
+      isLoggedIn.value = true;
     }
   }
 

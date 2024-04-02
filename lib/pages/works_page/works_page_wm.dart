@@ -11,7 +11,7 @@ abstract class IWorksPageWidgetModel extends IWidgetModel {
 
   ThemeData get theme;
 
-  BehaviorSubject<bool> get isLoggedIn;
+  ValueNotifier<bool> get isLoggedIn;
 
 }
 
@@ -29,7 +29,7 @@ class WorksPageWidgetModel extends WidgetModel<WorksPageWidget, WorksPageModel>
   }
 
   @override
-  BehaviorSubject<bool> get isLoggedIn {
+  ValueNotifier<bool> get isLoggedIn {
     return model.isLoggedIn();
   }
 

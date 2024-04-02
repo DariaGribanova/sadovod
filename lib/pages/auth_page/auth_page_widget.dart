@@ -75,9 +75,7 @@ class AuthPageWidget extends ElementaryWidget<IAuthPageWidgetModel> {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 20.0),
                 child: OutlinedButton(
-                  onPressed: () async {
-                    wm.auth();
-                  },
+                  onPressed: wm.auth,
                   child: const Center(
                       child: Padding(
                     padding: EdgeInsets.all(20.0),

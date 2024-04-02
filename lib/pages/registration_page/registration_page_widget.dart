@@ -101,7 +101,7 @@ class RegistrationPageWidget extends ElementaryWidget<IRegistrationPageWidgetMod
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 20.0),
                 child: OutlinedButton(
-                  onPressed: () async {},
+                  onPressed: wm.registr,
                   child: const Center(
                       child: Padding(
                         padding: EdgeInsets.all(20.0),

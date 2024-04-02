@@ -15,7 +15,7 @@ abstract class IRegistrationPageWidgetModel extends IWidgetModel {
 
   void navigateAuth();
 
-  void auth();
+  void registr();
 
   TextEditingController get usernameController;
 
@@ -32,8 +32,8 @@ abstract class IRegistrationPageWidgetModel extends IWidgetModel {
 
 RegistrationPageWidgetModel defaultRegistrationPageWidgetModelFactory(
     BuildContext context) {
-  return RegistrationPageWidgetModel(
-      RegistrationPageModel(context.read(), AppComponents().tokenRepository));
+  return RegistrationPageWidgetModel(RegistrationPageModel(context.read(),
+      AppComponents().tokenRepository, AppComponents().authService));
 }
 
 class RegistrationPageWidgetModel
@@ -76,7 +76,34 @@ class RegistrationPageWidgetModel
   }
 
   @override
-  void auth() {
+  void registr() {
+    if (usernameController.text.isEmpty ||
+        passwordController.text.isEmpty ||
+        nameController.text.isEmpty ||
+        lastNameController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Заполните все поля'),
+          duration: Duration(seconds: 2),
+        ),
+      );
+      return;
+    }
+    model
+        .registr(
+            username: usernameController.text,
+            password: passwordController.text,
+            name: nameController.text,
+            lastName: lastNameController.text)
+        .then((value) => context.router.popUntilRoot())
+        .catchError(
+          (error, stackTrace) => ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(error.response.data),
+              duration: Duration(seconds: 2),
+            ),
+          ),
+        );
   }
 
   @override

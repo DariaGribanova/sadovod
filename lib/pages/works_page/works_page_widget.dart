@@ -35,11 +35,10 @@ class WorksPageWidget extends ElementaryWidget<IWorksPageWidgetModel> {
           //       )
           //     : null,
         ),
-        body: StreamBuilder<bool>(
-          stream: wm.isLoggedIn,
-          initialData: null,
-          builder: (context, snapshot) {
-            if (snapshot.data == true) {
+        body: ValueListenableBuilder<bool>(
+          valueListenable: wm.isLoggedIn,
+          builder: (context, isLoggedIn, _) {
+            if (isLoggedIn == true) {
               return Column(
                 children: [
                   TabBar(

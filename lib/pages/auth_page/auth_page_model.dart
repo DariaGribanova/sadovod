@@ -1,30 +1,28 @@
-import 'package:dio/dio.dart';
 import 'package:elementary/elementary.dart';
-import 'package:pretty_dio_logger/pretty_dio_logger.dart';
-import 'package:sadovod/data/request_utils.dart';
+import 'package:sadovod/data/manager/profile_manager.dart';
 import 'package:sadovod/data/service/auth_service.dart';
 import 'package:sadovod/data/token_ropository.dart';
 import 'package:sadovod/model/auth.dart';
-import 'package:sadovod/model/auth_response.dart';
-
 
 class AuthPageModel extends ElementaryModel {
-  AuthPageModel(ErrorHandler errorHandler, this.tokenRepository, this.authService)
+  AuthPageModel(
+      ErrorHandler errorHandler, this.tokenRepository, this.authService, this.profileManager)
       : super(errorHandler: errorHandler);
 
   final TokenRepository tokenRepository;
   final AuthService authService;
+  final ProfileManager profileManager;
 
   bool isLoggedIn() {
     return tokenRepository.auth;
   }
 
-  Future<void> auth() async {
-     await authService.auth(
+  Future<void> auth({required String username, required String password}) async {
+    await authService.auth(
       request: Auth(
-        username: 'Dashich', password: '11111',
+        username: username,
+        password: password,
       ),
-    );
+    ).then((value) => profileManager.getUser());
   }
-
 }

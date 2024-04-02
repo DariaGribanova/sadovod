@@ -15,6 +15,18 @@ abstract class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
+    ProfileTab.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const ProfileTabPage(),
+      );
+    },
+    WorksTab.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const WorksTabPage(),
+      );
+    },
     AuthRouteWidget.name: (routeData) {
       final args = routeData.argsAs<AuthRouteWidgetArgs>(
           orElse: () => const AuthRouteWidgetArgs());
@@ -43,12 +55,6 @@ abstract class _$AppRouter extends RootStackRouter {
         ),
       );
     },
-    ProfileTab.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const ProfileTabPage(),
-      );
-    },
     RegistrationRouteWidget.name: (routeData) {
       final args = routeData.argsAs<RegistrationRouteWidgetArgs>(
           orElse: () => const RegistrationRouteWidgetArgs());
@@ -71,13 +77,35 @@ abstract class _$AppRouter extends RootStackRouter {
         ),
       );
     },
-    WorksTab.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const WorksTabPage(),
-      );
-    },
   };
+}
+
+/// generated route for
+/// [ProfileTabPage]
+class ProfileTab extends PageRouteInfo<void> {
+  const ProfileTab({List<PageRouteInfo>? children})
+      : super(
+          ProfileTab.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ProfileTab';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [WorksTabPage]
+class WorksTab extends PageRouteInfo<void> {
+  const WorksTab({List<PageRouteInfo>? children})
+      : super(
+          WorksTab.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'WorksTab';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for
@@ -177,20 +205,6 @@ class ProfileRouteWidgetArgs {
 }
 
 /// generated route for
-/// [ProfileTabPage]
-class ProfileTab extends PageRouteInfo<void> {
-  const ProfileTab({List<PageRouteInfo>? children})
-      : super(
-          ProfileTab.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'ProfileTab';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
 /// [RegistrationPageWidget]
 class RegistrationRouteWidget
     extends PageRouteInfo<RegistrationRouteWidgetArgs> {
@@ -271,18 +285,4 @@ class WorksRouteWidgetArgs {
   String toString() {
     return 'WorksRouteWidgetArgs{key: $key, wmFactory: $wmFactory}';
   }
-}
-
-/// generated route for
-/// [WorksTabPage]
-class WorksTab extends PageRouteInfo<void> {
-  const WorksTab({List<PageRouteInfo>? children})
-      : super(
-          WorksTab.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'WorksTab';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
 }

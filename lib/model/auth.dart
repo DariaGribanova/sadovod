@@ -12,6 +12,8 @@ class Auth with _$Auth {
   const factory Auth({
     required String username,
     required String password,
+    String? name,
+    String? lastname,
   }) = _Auth;
 
   factory Auth.fromJson(Map<String, dynamic> json) => _$AuthFromJson(json);

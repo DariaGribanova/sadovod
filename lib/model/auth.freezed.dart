@@ -22,6 +22,8 @@ Auth _$AuthFromJson(Map<String, dynamic> json) {
 mixin _$Auth {
   String get username => throw _privateConstructorUsedError;
   String get password => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
+  String? get lastname => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -33,7 +35,7 @@ abstract class $AuthCopyWith<$Res> {
   factory $AuthCopyWith(Auth value, $Res Function(Auth) then) =
       _$AuthCopyWithImpl<$Res, Auth>;
   @useResult
-  $Res call({String username, String password});
+  $Res call({String username, String password, String? name, String? lastname});
 }
 
 /// @nodoc
@@ -51,6 +53,8 @@ class _$AuthCopyWithImpl<$Res, $Val extends Auth>
   $Res call({
     Object? username = null,
     Object? password = null,
+    Object? name = freezed,
+    Object? lastname = freezed,
   }) {
     return _then(_value.copyWith(
       username: null == username
@@ -61,6 +65,14 @@ class _$AuthCopyWithImpl<$Res, $Val extends Auth>
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
               as String,
+      name: freezed == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      lastname: freezed == lastname
+          ? _value.lastname
+          : lastname // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -72,7 +84,7 @@ abstract class _$$AuthImplCopyWith<$Res> implements $AuthCopyWith<$Res> {
       __$$AuthImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String username, String password});
+  $Res call({String username, String password, String? name, String? lastname});
 }
 
 /// @nodoc
@@ -87,6 +99,8 @@ class __$$AuthImplCopyWithImpl<$Res>
   $Res call({
     Object? username = null,
     Object? password = null,
+    Object? name = freezed,
+    Object? lastname = freezed,
   }) {
     return _then(_$AuthImpl(
       username: null == username
@@ -97,6 +111,14 @@ class __$$AuthImplCopyWithImpl<$Res>
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
               as String,
+      name: freezed == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      lastname: freezed == lastname
+          ? _value.lastname
+          : lastname // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -105,7 +127,11 @@ class __$$AuthImplCopyWithImpl<$Res>
 
 @JsonSerializable(explicitToJson: true, includeIfNull: false)
 class _$AuthImpl implements _Auth {
-  const _$AuthImpl({required this.username, required this.password});
+  const _$AuthImpl(
+      {required this.username,
+      required this.password,
+      this.name,
+      this.lastname});
 
   factory _$AuthImpl.fromJson(Map<String, dynamic> json) =>
       _$$AuthImplFromJson(json);
@@ -114,10 +140,14 @@ class _$AuthImpl implements _Auth {
   final String username;
   @override
   final String password;
+  @override
+  final String? name;
+  @override
+  final String? lastname;
 
   @override
   String toString() {
-    return 'Auth(username: $username, password: $password)';
+    return 'Auth(username: $username, password: $password, name: $name, lastname: $lastname)';
   }
 
   @override
@@ -128,12 +158,16 @@ class _$AuthImpl implements _Auth {
             (identical(other.username, username) ||
                 other.username == username) &&
             (identical(other.password, password) ||
-                other.password == password));
+                other.password == password) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.lastname, lastname) ||
+                other.lastname == lastname));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, username, password);
+  int get hashCode =>
+      Object.hash(runtimeType, username, password, name, lastname);
 
   @JsonKey(ignore: true)
   @override
@@ -152,7 +186,9 @@ class _$AuthImpl implements _Auth {
 abstract class _Auth implements Auth {
   const factory _Auth(
       {required final String username,
-      required final String password}) = _$AuthImpl;
+      required final String password,
+      final String? name,
+      final String? lastname}) = _$AuthImpl;
 
   factory _Auth.fromJson(Map<String, dynamic> json) = _$AuthImpl.fromJson;
 
@@ -160,6 +196,10 @@ abstract class _Auth implements Auth {
   String get username;
   @override
   String get password;
+  @override
+  String? get name;
+  @override
+  String? get lastname;
   @override
   @JsonKey(ignore: true)
   _$$AuthImplCopyWith<_$AuthImpl> get copyWith =>

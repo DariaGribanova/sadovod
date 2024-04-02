@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:sadovod/data/interseptor.dart';
+import 'package:sadovod/data/manager/profile_manager.dart';
 import 'package:sadovod/data/service/auth_service.dart';
 import 'package:sadovod/data/token_ropository.dart';
 
@@ -18,6 +19,7 @@ class AppComponents {
   final Dio dio = Dio();
   final TokenRepository tokenRepository = TokenRepository();
   late final AuthService authService = AuthService(dio);
+  late final ProfileManager profileManager = ProfileManager(authService);
 
   Future<void> init() async {
     dio.options

@@ -29,8 +29,10 @@ abstract class IAuthPageWidgetModel extends IWidgetModel {
 }
 
 AuthPageWidgetModel defaultAuthPageWidgetModelFactory(BuildContext context) {
-  return AuthPageWidgetModel(AuthPageModel(context.read(),
-      AppComponents().tokenRepository, AppComponents().authService));
+  return AuthPageWidgetModel(
+    AuthPageModel(context.read(), AppComponents().tokenRepository,
+        AppComponents().authService, AppComponents().profileManager),
+  );
 }
 
 class AuthPageWidgetModel extends WidgetModel<AuthPageWidget, AuthPageModel>
@@ -69,7 +71,28 @@ class AuthPageWidgetModel extends WidgetModel<AuthPageWidget, AuthPageModel>
 
   @override
   void auth() {
-    model.auth().then((value) => context.router.popUntilRoot());
+    if (usernameController.text.isEmpty || passwordController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Заполните все поля'),
+          duration: Duration(seconds: 2),
+        ),
+      );
+      return;
+    }
+    model
+        .auth(
+            username: usernameController.text,
+            password: passwordController.text)
+        .then((value) => context.router.popUntilRoot())
+        .catchError(
+          (error, stackTrace) => ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Неверные данные'),
+              duration: Duration(seconds: 2),
+            ),
+          ),
+        );
   }
 
   @override

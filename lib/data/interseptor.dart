@@ -25,7 +25,7 @@ class JWTInterceptor extends QueuedInterceptor {
 
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) async {
-    if (response.requestOptions.path == 'auth/sign-in') {
+    if ((response.requestOptions.path == 'auth/sign-in' || response.requestOptions.path == 'auth/sign-up')) {
       repository.saveTokens(
         accessToken: response.data['token'],
         refreshToken: response.data['refreshToken'],
@@ -38,7 +38,7 @@ class JWTInterceptor extends QueuedInterceptor {
   Future onError(error, handler) async {
     if ((error.response?.statusCode == 403 ||
         error.response?.statusCode == 401) &&
-        error.requestOptions.path != 'auth/sign-in') {
+        (error.requestOptions.path != 'auth/sign-in' || error.requestOptions.path != 'auth/sign-up')) {
       await _refresh();
       if (repository.auth) {
         final response = await _retry(error.requestOptions);

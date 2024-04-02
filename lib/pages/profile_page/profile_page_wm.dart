@@ -2,7 +2,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:elementary/elementary.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:rxdart/rxdart.dart';
 import 'package:sadovod/data/app_components.dart';
 import 'package:sadovod/navigation/app_router.dart';
 import 'package:sadovod/pages/profile_page/profile_page_model.dart';
@@ -11,7 +10,7 @@ import 'profile_page_widget.dart';
 abstract class IProfilePageWidgetModel extends IWidgetModel {
   ThemeData get theme;
 
-  BehaviorSubject<bool> get isLoggedIn;
+  ValueNotifier<bool> get isLoggedIn;
 
   void navigateToAuth();
 
@@ -21,7 +20,7 @@ abstract class IProfilePageWidgetModel extends IWidgetModel {
 ProfilePageWidgetModel defaultProfilePageWidgetModelFactory(
     BuildContext context) {
   return ProfilePageWidgetModel(
-      ProfilePageModel(context.read(), AppComponents().tokenRepository));
+      ProfilePageModel(context.read(), AppComponents().tokenRepository, AppComponents().profileManager));
 }
 
 class ProfilePageWidgetModel
@@ -32,10 +31,11 @@ class ProfilePageWidgetModel
   @override
   void initWidgetModel() {
     super.initWidgetModel();
+    model.getUser();
   }
 
   @override
-  BehaviorSubject<bool> get isLoggedIn {
+  ValueNotifier<bool> get isLoggedIn {
     return model.isLoggedIn();
   }
 
@@ -51,4 +51,5 @@ class ProfilePageWidgetModel
   Future<void> logout() {
     return model.logout();
   }
+
 }
